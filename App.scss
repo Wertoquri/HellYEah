@@ -1,0 +1,173 @@
+.page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background-position: center;
+  background-size: cover;
+}
+
+.snow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.snowflake {
+  position: absolute;
+  left: var(--left);
+  top: -12vh;
+  animation: snow-fall var(--fall-duration) linear var(--fall-delay) infinite;
+  will-change: transform;
+}
+
+.snowflake__inner {
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  opacity: var(--opacity);
+  border-radius: 999px;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95) 0 45%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  filter: blur(var(--blur));
+  will-change: transform, opacity;
+  animation:
+    snow-sway var(--sway-duration) ease-in-out var(--sway-delay) infinite,
+    snow-twinkle var(--twinkle-duration) ease-in-out var(--twinkle-delay) infinite;
+}
+
+@keyframes snow-fall {
+  from {
+    transform: translate3d(0, -10vh, 0);
+  }
+  to {
+    transform: translate3d(0, 110vh, 0);
+  }
+}
+
+@keyframes snow-sway {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(var(--drift));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes snow-twinkle {
+  0%,
+  100% {
+    opacity: var(--opacity);
+  }
+  50% {
+    opacity: calc(var(--opacity) * 0.55);
+  }
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 100%);
+  padding: 28px 24px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  will-change: transform, opacity;
+}
+
+.card--out {
+  animation: card-out 180ms ease forwards;
+}
+
+.card--in {
+  animation: card-in 340ms ease forwards;
+}
+
+@keyframes card-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.title {
+  margin: 0 0 18px;
+  color: #ffffff;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+}
+
+.emoji {
+  margin: -8px 0 18px;
+  color: #ffffff;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.button {
+  appearance: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 1);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.65);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowflake,
+  .snowflake__inner {
+    animation: none;
+  }
+
+  .card--out,
+  .card--in {
+    animation: none;
+  }
+}
